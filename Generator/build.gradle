@@ -1,0 +1,22 @@
+buildscript {
+    dependencies {
+        classpath files('libs/wta-generator-1.2-bundle.jar')
+    }
+}
+apply plugin: "java"
+
+import com.willowtreeapps.androidcontentprovidergenerator.*;
+
+task contentProviderGen {
+    description = 'Generating a beautiful ContentProvider and required classes'
+    doLast {
+        System.out.println("Generating ContentProvider...")
+        String inputDir = "$projectDir/schema";
+        String outputDir = "$projectDir/../App/src/main/java";
+        String resDir = "$projectDir/../App/src/main/res";
+        //if gradle throws an error on the following line, you probably either don't have your import statement set or you have the wrong path in your buildscript definition
+        Main.Generate(inputDir, outputDir, resDir, true);
+    }
+}
+
+compileJava.dependsOn contentProviderGen

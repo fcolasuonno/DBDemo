@@ -1,0 +1,10 @@
+IMPORTANT: Copy the following into the application tag of your AndroidManifest.xml
+
+
+<service
+    android:name="com.bitmastro.debenhams.demo.api.ApiService"
+    android:enabled="true" />
+<provider
+    android:authorities="com.bitmastro.debenhams.demo"
+    android:name="com.bitmastro.debenhams.demo.ProductProvider"
+    android:exported="false" />

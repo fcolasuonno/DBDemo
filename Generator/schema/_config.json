@@ -1,0 +1,16 @@
+{
+	"toolVersion": "1.2",
+	"projectPackageId": "com.bitmastro.debenhams.demo",
+	"authority": "com.bitmastro.debenhams.demo",
+	"providerJavaPackage": "com.bitmastro.debenhams.demo",
+	"providerClassName": "ProductProvider",
+	"sqliteHelperClassName": "CustomSQLiteOpenHelper",
+	"databaseFileName": "product.db",
+	"enableForeignKeys": true,
+	"projectBaseUrl": "http://retailtwo.nn4m.co.uk/DB/sv4",
+	"generateProvider":true,
+	"generateModels":true,
+	"generateViews":true,
+	"generateApi":true,
+	"generateFragments":true,
+}

@@ -1,0 +1,57 @@
+{
+	"fields": [
+		{
+			"name": "first_name",
+			"serializedName": "FirstName",
+			"type": "String"
+		},
+		{
+			"name": "last_name",
+			"type": "String"
+		},
+		{
+			"name": "age",
+			"type": "Integer",
+			"nullable": false
+		},
+		{
+			"name": "is_blue_eyes",
+			"type": "Boolean",
+			"default_value": "1"
+		},
+		{
+			"name": "date_of_birth",
+			"type": "Date",
+			"index": true
+		},
+		{
+			"name": "height",
+			"type": "Float"
+		},
+		{
+			"name": "company_id",
+			"type": "Long",
+			"nullable": false,
+		},
+        {
+         "name": "gender",
+         "type": "enum",
+         "enumName": "Gender",
+         "enumValues": [
+             "MALE",
+             "FEMALE",
+             "OTHER",
+         ],
+         "nullable": false,
+        }
+	],
+	
+	"constraints": [
+		{
+			"name": "unique_name",
+			"definition": "unique (first_name, last_name) on conflict replace"
+		},
+	],
+
+	"urlPath":"productLists/json/Women_Dresses_Day-dresses.json",
+}
