@@ -1,57 +1,103 @@
 {
 	"fields": [
-		{
-			"name": "first_name",
-			"serializedName": "FirstName",
-			"type": "String"
-		},
-		{
-			"name": "last_name",
-			"type": "String"
-		},
-		{
-			"name": "age",
-			"type": "Integer",
-			"nullable": false
-		},
-		{
-			"name": "is_blue_eyes",
-			"type": "Boolean",
-			"default_value": "1"
-		},
-		{
-			"name": "date_of_birth",
-			"type": "Date",
-			"index": true
-		},
-		{
-			"name": "height",
-			"type": "Float"
-		},
-		{
-			"name": "company_id",
-			"type": "Long",
-			"nullable": false,
-		},
         {
-         "name": "gender",
-         "type": "enum",
-         "enumName": "Gender",
-         "enumValues": [
-             "MALE",
-             "FEMALE",
-             "OTHER",
-         ],
-         "nullable": false,
+          "type" : "String",
+          "name" : "prodnum",
+          "serializedName" : "prodnum",
+          "unique" :  true;
+        },
+        {
+          "type" : "String",
+          "name" : "brand",
+          "serializedName" : "brand",
+          "index" : true
+        },
+        {
+          "type" : "String",
+          "name" : "name",
+          "serializedName" : "name"
+        },
+        {
+          "type" : "String",
+          "name" : "minGBP",
+          "serializedName" : "minGBP"
+        },
+        {
+          "type" : "String",
+          "name" : "maxGBP",
+          "serializedName" : "maxGBP"
+        },
+        {
+          "type" : "String",
+          "name" : "minGBP_was",
+          "serializedName" : "minGBP_was"
+        },
+        {
+          "type" : "String",
+          "name" : "maxGBP_was",
+          "serializedName" : "maxGBP_was"
+        },
+        {
+          "type" : "String",
+          "name" : "img",
+          "serializedName" : "img"
+        },
+        {
+          "type" : "String",
+          "name" : "sizes",
+          "serializedName" : "sizes"
+        },
+        {
+          "type" : "String",
+          "name" : "colours",
+          "serializedName" : "colours"
+        },
+        {
+          "type" : "String",
+          "name" : "category",
+          "serializedName" : "category",
+          "index" : true
+        },
+        {
+          "type" : "Integer",
+          "name" : "noImg",
+          "serializedName" : "noImg"
+        },
+        {
+          "type" : "String",
+          "name" : "Rating",
+           "serializedName" : "Rating",
+           "index": true
+        },
+        {
+          "type" : "Integer",
+          "name" : "rating_number",
+           "serializedName" : "rating_number"
+        },
+        {
+          "type" : "String",
+          "name" : "Style",
+           "serializedName" : "Style"
+        },
+        {
+          "type" : "String",
+          "name" : "Length",
+          "serializedName" : "Length"
+        },
+        {
+          "type" : "String",
+          "name" : "Sleeve",
+          "serializedName" : "Sleeve length"
         }
 	],
 	
 	"constraints": [
-		{
-			"name": "unique_name",
-			"definition": "unique (first_name, last_name) on conflict replace"
-		},
+	        {
+    			"name": "unique_prodnum",
+    			"definition": "unique (prodnum) on conflict replace"
+    		},
+
 	],
 
-	"urlPath":"productLists/json/Women_Dresses_Day-dresses.json",
+	"urlPath":"/productLists/json/Women_Dresses_Day-dresses.json",
 }

@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath files('libs/wta-generator-1.2-bundle.jar')
+        classpath files('libs/wta-generator-1.3-bundle.jar')
     }
 }
 apply plugin: "java"
@@ -12,8 +12,8 @@ task contentProviderGen {
     doLast {
         System.out.println("Generating ContentProvider...")
         String inputDir = "$projectDir/schema";
-        String outputDir = "$projectDir/../App/src/main/java";
-        String resDir = "$projectDir/../App/src/main/res";
+        String outputDir = "$projectDir/../app/src/main/java";
+        String resDir = "$projectDir/../app/src/main/res";
         //if gradle throws an error on the following line, you probably either don't have your import statement set or you have the wrong path in your buildscript definition
         Main.Generate(inputDir, outputDir, resDir, true);
     }

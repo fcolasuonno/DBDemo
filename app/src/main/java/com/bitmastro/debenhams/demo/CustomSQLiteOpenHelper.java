@@ -26,19 +26,32 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_PRODUCT = "CREATE TABLE IF NOT EXISTS "
             + ProductColumns.TABLE_NAME + " ( "
             + ProductColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + ProductColumns.FIRST_NAME + " TEXT, "
-            + ProductColumns.LAST_NAME + " TEXT, "
-            + ProductColumns.AGE + " INTEGER NOT NULL, "
-            + ProductColumns.IS_BLUE_EYES + " INTEGER DEFAULT '1', "
-            + ProductColumns.DATE_OF_BIRTH + " INTEGER, "
-            + ProductColumns.HEIGHT + " REAL, "
-            + ProductColumns.COMPANY_ID + " INTEGER NOT NULL, "
-            + ProductColumns.GENDER + " INTEGER NOT NULL "
-            + ", CONSTRAINT UNIQUE_NAME UNIQUE (FIRST_NAME, LAST_NAME) ON CONFLICT REPLACE"
+            + ProductColumns.PRODNUM + " TEXT, "
+            + ProductColumns.BRAND + " TEXT, "
+            + ProductColumns.NAME + " TEXT, "
+            + ProductColumns.MINGBP + " TEXT, "
+            + ProductColumns.MAXGBP + " TEXT, "
+            + ProductColumns.MINGBP_WAS + " TEXT, "
+            + ProductColumns.MAXGBP_WAS + " TEXT, "
+            + ProductColumns.IMG + " TEXT, "
+            + ProductColumns.SIZES + " TEXT, "
+            + ProductColumns.COLOURS + " TEXT, "
+            + ProductColumns.CATEGORY + " TEXT, "
+            + ProductColumns.NOIMG + " INTEGER, "
+            + ProductColumns.RATING + " TEXT, "
+            + ProductColumns.RATING_NUMBER + " INTEGER, "
+            + ProductColumns.STYLE + " TEXT, "
+            + ProductColumns.LENGTH + " TEXT, "
+            + ProductColumns.SLEEVE + " TEXT "
+            + ", CONSTRAINT UNIQUE_PRODNUM UNIQUE (PRODNUM) ON CONFLICT REPLACE"
             + " );";
 
-    private static final String SQL_CREATE_INDEX_PRODUCT_DATE_OF_BIRTH = "CREATE INDEX IDX_PRODUCT_DATE_OF_BIRTH "
-            + " ON " + ProductColumns.TABLE_NAME + " ( " + ProductColumns.DATE_OF_BIRTH + " );";
+    private static final String SQL_CREATE_INDEX_PRODUCT_BRAND = "CREATE INDEX IDX_PRODUCT_BRAND "
+            + " ON " + ProductColumns.TABLE_NAME + " ( " + ProductColumns.BRAND + " );";
+    private static final String SQL_CREATE_INDEX_PRODUCT_CATEGORY = "CREATE INDEX IDX_PRODUCT_CATEGORY "
+            + " ON " + ProductColumns.TABLE_NAME + " ( " + ProductColumns.CATEGORY + " );";
+    private static final String SQL_CREATE_INDEX_PRODUCT_RATING = "CREATE INDEX IDX_PRODUCT_RATING "
+            + " ON " + ProductColumns.TABLE_NAME + " ( " + ProductColumns.RATING + " );";
     // @formatter:on
 
     public static CustomSQLiteOpenHelper newInstance(Context context) {
@@ -81,7 +94,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         db.execSQL(SQL_CREATE_TABLE_PRODUCT);
-        db.execSQL(SQL_CREATE_INDEX_PRODUCT_DATE_OF_BIRTH);
+        db.execSQL(SQL_CREATE_INDEX_PRODUCT_BRAND);
+        db.execSQL(SQL_CREATE_INDEX_PRODUCT_CATEGORY);
+        db.execSQL(SQL_CREATE_INDEX_PRODUCT_RATING);
     }
 
     @Override

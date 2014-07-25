@@ -7,6 +7,7 @@ import java.util.List;
 import com.bitmastro.debenhams.demo.model.ProductModel;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
 import com.bitmastro.debenhams.demo.product.ProductContentValues;
+import com.bitmastro.debenhams.demo.DebenhamsProvider;
 import retrofit.RestAdapter;
 
 public class ApiService extends IntentService {
@@ -38,7 +39,8 @@ public class ApiService extends IntentService {
     }
 
     private void getProductFromApi(Bundle intent){
-        List<ProductModel> items = service.listProduct();
-        getContentResolver().bulkInsert(ProductColumns.CONTENT_URI, ProductContentValues.getContentValues(items.toArray(new ProductModel[items.size()])));
+        List<ProductModel> items = service.listProduct().getProducts();
+        //getContentResolver().bulkInsert(ProductColumns.CONTENT_URI, ProductContentValues.getContentValues(items.toArray(new ProductModel[items.size()])));
+        getContentResolver().bulkInsert(DebenhamsProvider.selection(ProductColumns.CONTENT_URI,ProductColumns.PRODNUM), ProductContentValues.getContentValues(items.toArray(new ProductModel[items.size()])));
     }
 }

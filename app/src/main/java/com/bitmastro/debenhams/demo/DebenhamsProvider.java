@@ -21,8 +21,8 @@ import android.util.Log;
 import com.bitmastro.debenhams.demo.BuildConfig;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
 
-public class ProductProvider extends ContentProvider {
-    private static final String TAG = ProductProvider.class.getSimpleName();
+public class DebenhamsProvider extends ContentProvider {
+    private static final String TAG = DebenhamsProvider.class.getSimpleName();
 
     private static final String TYPE_CURSOR_ITEM = "vnd.android.cursor.item/";
     private static final String TYPE_CURSOR_DIR = "vnd.android.cursor.dir/";
@@ -32,6 +32,7 @@ public class ProductProvider extends ContentProvider {
 
     public static final String QUERY_NOTIFY = "QUERY_NOTIFY";
     public static final String QUERY_GROUP_BY = "QUERY_GROUP_BY";
+    public static final String QUERY_SELECTION = "QUERY_SELECTION";
 
     private static final int URI_TYPE_PRODUCT = 0;
     private static final int URI_TYPE_PRODUCT_ID = 1;
@@ -45,7 +46,7 @@ public class ProductProvider extends ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, ProductColumns.TABLE_NAME + "/#", URI_TYPE_PRODUCT_ID);
     }
 
-    private CustomSQLiteOpenHelper mCustomSQLiteOpenHelper;
+    protected CustomSQLiteOpenHelper mCustomSQLiteOpenHelper;
 
     @Override
     public boolean onCreate() {
@@ -80,22 +81,49 @@ public class ProductProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "bulkInsert uri=" + uri + " values.length=" + values.length);
         final String table = uri.getLastPathSegment();
+        final String selection = uri.getQueryParameter(QUERY_SELECTION);
         final SQLiteDatabase db = mCustomSQLiteOpenHelper.getWritableDatabase();
         int res = 0;
-        db.beginTransaction();
-        try {
-            for (final ContentValues v : values) {
-                final long id = db.insert(table, null, v);
-                db.yieldIfContendedSafely();
-                if (id != -1) {
-                    res++;
+        if(selection != null) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "bulkUpdate uri=" + uri + " values.length=" + values.length);
+            String selectionClause = selection+"=?";
+            String[] selectionValue = new String[1];
+            db.beginTransaction();
+            try {
+                for (final ContentValues v : values) {
+                    selectionValue[0] = v.getAsString(selection);
+                    final long id = db.update(table, v, selectionClause, selectionValue);
+                    db.yieldIfContendedSafely();
+                    if (id == 1) {
+                        res++;
+                    } else {
+                        final long id2 = db.insert(table, null, v);
+                        db.yieldIfContendedSafely();
+                        if (id2 != -1) {
+                            res++;
+                        }
+                    }
                 }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
             }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+        } else {
+            if (BuildConfig.DEBUG) Log.d(TAG, "bulkInsert uri=" + uri + " values.length=" + values.length);
+            db.beginTransaction();
+            try {
+                for (final ContentValues v : values) {
+                    final long id = db.insert(table, null, v);
+                    db.yieldIfContendedSafely();
+                    if (id != -1) {
+                        res++;
+                    }
+                }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
         }
         String notify;
         if (res != 0 && ((notify = uri.getQueryParameter(QUERY_NOTIFY)) == null || "true".equals(notify))) {
@@ -208,5 +236,9 @@ public class ProductProvider extends ContentProvider {
 
     public static Uri groupBy(Uri uri, String groupBy) {
         return uri.buildUpon().appendQueryParameter(QUERY_GROUP_BY, groupBy).build();
+    }
+
+    public static Uri selection(Uri uri, String selection) {
+        return uri.buildUpon().appendQueryParameter(QUERY_SELECTION, selection).build();
     }
 }
