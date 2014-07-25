@@ -16,6 +16,7 @@ public interface ProductColumns extends BaseColumns {
     Uri CONTENT_URI = Uri.parse(DebenhamsProvider.CONTENT_URI_BASE + "/" + TABLE_NAME);
 
     String _ID = BaseColumns._ID;
+    String DEFAULT_ORDER = _ID;
     String PRODNUM = "prodnum";
     String BRAND = "brand";
     String NAME = "name";
@@ -33,11 +34,8 @@ public interface ProductColumns extends BaseColumns {
     String STYLE = "style";
     String LENGTH = "length";
     String SLEEVE = "sleeve";
-
-    String DEFAULT_ORDER = _ID;
-
-	// @formatter:off
-    String[] FULL_PROJECTION = new String[] {
+    // @formatter:off
+    String[] FULL_PROJECTION = new String[]{
             _ID,
             PRODNUM,
             BRAND,

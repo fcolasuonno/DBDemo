@@ -3,65 +3,45 @@
  */
 package com.bitmastro.debenhams.demo.fragment;
 
-import android.support.v4.app.ListFragment;
-
+import android.database.Cursor;
 import android.os.Bundle;
-import com.bitmastro.debenhams.demo.R;
-
-import java.util.List;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.database.Cursor;
-import oak.viewmodel.ViewModelCursorAdapter;
+
+import com.bitmastro.debenhams.demo.adapter.ProductAdapter;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
-import com.bitmastro.debenhams.demo.product.ProductCursor;
 import com.bitmastro.debenhams.demo.product.ProductSelection;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
 
 /**
  * A fragment representing a list of products.
  */
-public class ProductListFragment extends ListFragment {
+@EFragment
+public class ProductListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static ProductListFragment newInstance() {
-        ProductListFragment fragment = new ProductListFragment();
-        // Add arguments to bundle
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ProductListFragment() {
+    @AfterViews
+    public void initLoader() {
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            // Instantiate arguments
-        }
-        getLoaderManager().initLoader(0, null, new LoaderCallbacks());
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // Change the selection to get a subset of your data
+        ProductSelection selection = new ProductSelection();
+        return new CursorLoader(getActivity(), ProductColumns.CONTENT_URI, ProductColumns.FULL_PROJECTION, selection.sel(), selection.args(), ProductColumns.DEFAULT_ORDER);
     }
-    private class LoaderCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
-        @Override
-        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            // Change the selection to get a subset of your data
-            ProductSelection selection = new ProductSelection();
-            return new CursorLoader(getActivity(), ProductColumns.CONTENT_URI, ProductColumns.FULL_PROJECTION, selection.sel(), selection.args(), ProductColumns.DEFAULT_ORDER);
-        }
 
-        @Override
-        public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-            setListAdapter(new ViewModelCursorAdapter(getActivity(), cursor, true, R.layout.view_product));
-        }
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        setListAdapter(new ProductAdapter(getActivity(), cursor, 0));
+    }
 
-        @Override
-        public void onLoaderReset(Loader<Cursor> loader) {
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
 
-        }
     }
 }

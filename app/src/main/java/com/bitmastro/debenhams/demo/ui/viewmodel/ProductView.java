@@ -4,42 +4,52 @@
 package com.bitmastro.debenhams.demo.ui.viewmodel;
 
 import android.content.Context;
-import android.util.AttributeSet;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.util.TypedValue;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.database.Cursor;
-import com.bitmastro.debenhams.demo.product.ProductCursor;
 
 import com.bitmastro.debenhams.demo.R;
-import oak.viewmodel.ViewModel;
+import com.bitmastro.debenhams.demo.base.ViewHolder;
+import com.bitmastro.debenhams.demo.product.ProductCursor;
+import com.squareup.picasso.Picasso;
+
+import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * ViewModel object for the {@code product}.
  */
-public class ProductView extends RelativeLayout implements ViewModel<Cursor>{
-   TextView tv;
+@EViewGroup(R.layout.view_product_merge)
+public class ProductView extends RelativeLayout implements ViewHolder {
+    @ViewById
+    protected TextView nameTextView, brandTextView;
 
-   public ProductView(Context context) {
+    @ViewById
+    protected TextView wasPriceTextView, nowPriceTextView;
+
+    @ViewById
+    protected ImageView imageView;
+
+    int width;
+
+    public ProductView(Context context) {
         super(context);
-    }
-
-    public ProductView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ProductView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        Resources r = getResources();
+        width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 96, r.getDisplayMetrics());
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        tv = (TextView) findViewById(R.id.textView);
-    }
-
-    @Override
-    public void populate(Cursor item) {
+    public void bind(Cursor item) {
         //Do stuff with Model class
         ProductCursor wrapper = new ProductCursor(item);
+        nameTextView.setText(wrapper.getName());
+        brandTextView.setText(wrapper.getBrand());
+        wasPriceTextView.setText(wrapper.getMingbpWas());
+        nowPriceTextView.setText(wrapper.getMingbp());
+        Picasso.with(getContext()).load("http://debenhams.scene7.com/is/image/Debenhams/" + wrapper.getImg() + "?hei=" + width + "&op_usm=1.1,0.5,0,0").into(imageView);
+
     }
 }

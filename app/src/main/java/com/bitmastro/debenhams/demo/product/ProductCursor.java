@@ -3,8 +3,6 @@
  */
 package com.bitmastro.debenhams.demo.product;
 
-import java.util.Date;
-
 import android.database.Cursor;
 
 import com.bitmastro.debenhams.demo.base.AbstractCursor;

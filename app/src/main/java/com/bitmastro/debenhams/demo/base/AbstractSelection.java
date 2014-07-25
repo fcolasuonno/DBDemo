@@ -3,14 +3,14 @@
  */
 package com.bitmastro.debenhams.demo.base;
 
+import android.content.ContentResolver;
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.content.ContentResolver;
-import android.net.Uri;
-
-public abstract class AbstractSelection <T extends AbstractSelection<?>> {
+public abstract class AbstractSelection<T extends AbstractSelection<?>> {
     private static final String EQ = "=?";
     private static final String PAREN_OPEN = "(";
     private static final String PAREN_CLOSE = ")";
@@ -116,29 +116,29 @@ public abstract class AbstractSelection <T extends AbstractSelection<?>> {
     }
 
     protected void addLike(String column, Object[] value) {
-            mSelection.append(column);
+        mSelection.append(column);
 
-            if (value == null) {
-                // Single null value
-                mSelection.append(IS_NULL);
-            } else if (value.length > 1) {
-                // Multiple values ('in' clause)
-                mSelection.append(LIKE);
-                for (int i = 0; i < value.length; i++) {
-                    mSelection.append("?");
-                    if (i < value.length - 1) {
-                        mSelection.append(COMMA);
-                    }
-                    mSelectionArgs.add(valueOf(value[i]));
+        if (value == null) {
+            // Single null value
+            mSelection.append(IS_NULL);
+        } else if (value.length > 1) {
+            // Multiple values ('in' clause)
+            mSelection.append(LIKE);
+            for (int i = 0; i < value.length; i++) {
+                mSelection.append("?");
+                if (i < value.length - 1) {
+                    mSelection.append(COMMA);
                 }
-                mSelection.append("");
-            } else {
-                // Single value
-                mSelection.append(LIKE).append("?");
-                mSelectionArgs.add(valueOf(value[0]));
-
+                mSelectionArgs.add(valueOf(value[i]));
             }
+            mSelection.append("");
+        } else {
+            // Single value
+            mSelection.append(LIKE).append("?");
+            mSelectionArgs.add(valueOf(value[0]));
+
         }
+    }
 
     private String valueOf(Object obj) {
         if (obj instanceof Date) {
@@ -174,8 +174,8 @@ public abstract class AbstractSelection <T extends AbstractSelection<?>> {
         mSelection.append(OR);
         return (T) this;
     }
-    
-    
+
+
     protected Object[] toObjectArray(int... array) {
         Object[] res = new Object[array.length];
         for (int i = 0; i < array.length; i++) {
@@ -224,16 +224,16 @@ public abstract class AbstractSelection <T extends AbstractSelection<?>> {
         if (size == 0) return null;
         return mSelectionArgs.toArray(new String[size]);
     }
-    
-    
+
+
     /**
      * Returns the {@code uri} argument to pass to the {@code ContentResolver} methods.
      */
     public abstract Uri uri();
-    
+
     /**
      * Deletes row(s) specified by this selection.
-     * 
+     *
      * @param contentResolver The content resolver to use.
      * @return The number of rows deleted.
      */

@@ -3,9 +3,6 @@
  */
 package com.bitmastro.debenhams.demo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -18,25 +15,22 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.bitmastro.debenhams.demo.BuildConfig;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DebenhamsProvider extends ContentProvider {
-    private static final String TAG = DebenhamsProvider.class.getSimpleName();
-
-    private static final String TYPE_CURSOR_ITEM = "vnd.android.cursor.item/";
-    private static final String TYPE_CURSOR_DIR = "vnd.android.cursor.dir/";
-
     public static final String AUTHORITY = "com.bitmastro.debenhams.demo";
     public static final String CONTENT_URI_BASE = "content://" + AUTHORITY;
-
     public static final String QUERY_NOTIFY = "QUERY_NOTIFY";
     public static final String QUERY_GROUP_BY = "QUERY_GROUP_BY";
     public static final String QUERY_SELECTION = "QUERY_SELECTION";
-
+    private static final String TAG = DebenhamsProvider.class.getSimpleName();
+    private static final String TYPE_CURSOR_ITEM = "vnd.android.cursor.item/";
+    private static final String TYPE_CURSOR_DIR = "vnd.android.cursor.dir/";
     private static final int URI_TYPE_PRODUCT = 0;
     private static final int URI_TYPE_PRODUCT_ID = 1;
-
 
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
@@ -47,6 +41,18 @@ public class DebenhamsProvider extends ContentProvider {
     }
 
     protected CustomSQLiteOpenHelper mCustomSQLiteOpenHelper;
+
+    public static Uri notify(Uri uri, boolean notify) {
+        return uri.buildUpon().appendQueryParameter(QUERY_NOTIFY, String.valueOf(notify)).build();
+    }
+
+    public static Uri groupBy(Uri uri, String groupBy) {
+        return uri.buildUpon().appendQueryParameter(QUERY_GROUP_BY, groupBy).build();
+    }
+
+    public static Uri selection(Uri uri, String selection) {
+        return uri.buildUpon().appendQueryParameter(QUERY_SELECTION, selection).build();
+    }
 
     @Override
     public boolean onCreate() {
@@ -85,9 +91,10 @@ public class DebenhamsProvider extends ContentProvider {
         final String selection = uri.getQueryParameter(QUERY_SELECTION);
         final SQLiteDatabase db = mCustomSQLiteOpenHelper.getWritableDatabase();
         int res = 0;
-        if(selection != null) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "bulkUpdate uri=" + uri + " values.length=" + values.length);
-            String selectionClause = selection+"=?";
+        if (selection != null) {
+            if (BuildConfig.DEBUG)
+                Log.d(TAG, "bulkUpdate uri=" + uri + " values.length=" + values.length);
+            String selectionClause = selection + "=?";
             String[] selectionValue = new String[1];
             db.beginTransaction();
             try {
@@ -110,7 +117,8 @@ public class DebenhamsProvider extends ContentProvider {
                 db.endTransaction();
             }
         } else {
-            if (BuildConfig.DEBUG) Log.d(TAG, "bulkInsert uri=" + uri + " values.length=" + values.length);
+            if (BuildConfig.DEBUG)
+                Log.d(TAG, "bulkInsert uri=" + uri + " values.length=" + values.length);
             db.beginTransaction();
             try {
                 for (final ContentValues v : values) {
@@ -148,7 +156,8 @@ public class DebenhamsProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "delete uri=" + uri + " selection=" + selection + " selectionArgs=" + Arrays.toString(selectionArgs));
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "delete uri=" + uri + " selection=" + selection + " selectionArgs=" + Arrays.toString(selectionArgs));
         final QueryParams queryParams = getQueryParams(uri, selection);
         final int res = mCustomSQLiteOpenHelper.getWritableDatabase().delete(queryParams.table, queryParams.selection, selectionArgs);
         String notify;
@@ -193,12 +202,6 @@ public class DebenhamsProvider extends ContentProvider {
         }
     }
 
-    private static class QueryParams {
-        public String table;
-        public String selection;
-        public String orderBy;
-    }
-
     private QueryParams getQueryParams(Uri uri, String selection) {
         QueryParams res = new QueryParams();
         String id = null;
@@ -230,15 +233,9 @@ public class DebenhamsProvider extends ContentProvider {
         return res;
     }
 
-    public static Uri notify(Uri uri, boolean notify) {
-        return uri.buildUpon().appendQueryParameter(QUERY_NOTIFY, String.valueOf(notify)).build();
-    }
-
-    public static Uri groupBy(Uri uri, String groupBy) {
-        return uri.buildUpon().appendQueryParameter(QUERY_GROUP_BY, groupBy).build();
-    }
-
-    public static Uri selection(Uri uri, String selection) {
-        return uri.buildUpon().appendQueryParameter(QUERY_SELECTION, selection).build();
+    private static class QueryParams {
+        public String table;
+        public String selection;
+        public String orderBy;
     }
 }

@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Model object for the {@code product}.
  */
-public class ProductModel{
+public class ProductModel {
     @SerializedName("prodnum")
     public String prodnum;
     @SerializedName("brand")
@@ -45,9 +45,10 @@ public class ProductModel{
     @SerializedName("Sleeve length")
     public String sleeve;
 
-    public ProductModel(){}
+    public ProductModel() {
+    }
 
-    public ProductModel(ProductCursor cursor){
+    public ProductModel(ProductCursor cursor) {
         this.prodnum = cursor.getProdnum();
         this.brand = cursor.getBrand();
         this.name = cursor.getName();

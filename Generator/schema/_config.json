@@ -10,7 +10,7 @@
 	"projectBaseUrl": "http://retailtwo.nn4m.co.uk/DB/sv4",
 	"generateProvider":true,
 	"generateModels":true,
-	"generateViews":true,
+	"generateViews":false,
 	"generateApi":true,
-	"generateFragments":true,
+	"generateFragments":false,
 }
