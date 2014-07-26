@@ -37,7 +37,7 @@
         android:id="@+id/brandTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentRight="false"
         android:layout_below="@+id/nameTextView"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/brandTextView"
+        android:layout_below="@+id/nameTextView"
         android:layout_marginRight="8dp"
         android:text="Was Price"
         android:textStyle="bold" />
@@ -89,4 +89,4 @@
         android:textStyle="bold" />
 
 
-</merge><!--</RelativeLayout>-->
+</merge><!--  </RelativeLayout>-->

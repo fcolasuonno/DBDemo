@@ -15,7 +15,7 @@ task contentProviderGen {
         String outputDir = "$projectDir/../app/src/main/java";
         String resDir = "$projectDir/../app/src/main/res";
         //if gradle throws an error on the following line, you probably either don't have your import statement set or you have the wrong path in your buildscript definition
-        Main.Generate(inputDir, outputDir, resDir, true);
+//        Main.Generate(inputDir, outputDir, resDir, true);
     }
 }
 

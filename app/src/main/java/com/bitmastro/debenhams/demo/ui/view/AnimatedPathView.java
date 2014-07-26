@@ -113,8 +113,7 @@ public class AnimatedPathView extends View {
         canvas.save();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         for (int i = 0; i < mPath.length; i++) {
-            Path path = mPath[i];
-            canvas.drawPath(path, mPaint);
+            canvas.drawPath(mPath[i], mPaint);
         }
         canvas.restore();
     }

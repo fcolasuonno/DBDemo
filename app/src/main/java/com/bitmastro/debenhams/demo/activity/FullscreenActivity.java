@@ -25,6 +25,7 @@ import org.androidannotations.annotations.ViewById;
 public class FullscreenActivity extends Activity {
 
     public static final int DURATION = 2000;
+    //    public static final int DURATION = 4;
     @ViewById
     protected AnimatedPathView animatedPathView;
 
@@ -61,8 +62,7 @@ public class FullscreenActivity extends Activity {
 
     public void nextActivity() {
         fetchData();
-        Intent listIntent = new Intent(this, ProductListActivity_.class);
-        startActivity(listIntent);
+        ProductListActivity_.intent(this).start();
         finish();
     }
 
