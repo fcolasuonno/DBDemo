@@ -23,7 +23,6 @@ public class AnimatedPathView extends View {
     int mStrokeColor;
     float mStrokeWidth;
 
-    float mProgress = 0f;
     float mPathLength = 0f;
 
 
@@ -61,8 +60,7 @@ public class AnimatedPathView extends View {
 
     public void setPath(Path[] p) {
         mPath = p;
-        for (int i = 0; i < p.length; i++) {
-            Path path = p[i];
+        for (Path path : p) {
             PathMeasure measure = new PathMeasure(path, false);
             mPathLength = Math.max(measure.getLength(), mPathLength);
         }
@@ -71,20 +69,21 @@ public class AnimatedPathView extends View {
     public void setPercentage(float percentage) {
         if (percentage < 0.0f || percentage > 1.0f)
             throw new IllegalArgumentException("setPercentage not between 0.0f and 1.0f");
-        mProgress = percentage;
+        PathEffect pathEffect = new DashPathEffect(new float[]{mPathLength, mPathLength}, (mPathLength - mPathLength * percentage));
+        mPaint.setPathEffect(pathEffect);
         invalidate();
     }
 
     public void setStroke(int percentage) {
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setAlpha(percentage);
+
         invalidate();
     }
 
     public void transformPathsBy(Matrix m) {
 
-        for (int i = 0; i < mPath.length; i++) {
-            Path path = mPath[i];
+        for (Path path : mPath) {
             path.transform(m);
             PathMeasure measure = new PathMeasure(path, false);
             mPathLength = Math.max(measure.getLength(), mPathLength);
@@ -107,13 +106,12 @@ public class AnimatedPathView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        PathEffect pathEffect = new DashPathEffect(new float[]{mPathLength, mPathLength}, (mPathLength - mPathLength * mProgress));
-        mPaint.setPathEffect(pathEffect);
+
 
         canvas.save();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        for (int i = 0; i < mPath.length; i++) {
-            canvas.drawPath(mPath[i], mPaint);
+        for (Path aMPath : mPath) {
+            canvas.drawPath(aMPath, mPaint);
         }
         canvas.restore();
     }

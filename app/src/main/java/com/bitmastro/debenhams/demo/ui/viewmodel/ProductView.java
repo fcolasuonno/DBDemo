@@ -60,7 +60,8 @@ public class ProductView extends RelativeLayout implements ViewHolder {
             wasPriceTextView.setText(mingbpWas);
         }
         nowPriceTextView.setText(wrapper.getMingbp());
-        Picasso.with(getContext()).load("http://debenhams.scene7.com/is/image/Debenhams/" + wrapper.getImg() + "?hei=" + width + "&op_usm=1.1,0.5,0,0").into(imageView);
+        Picasso.with(getContext()).load("http://debenhams.scene7.com/is/image/Debenhams/" + wrapper.getImg() + "?hei=" + width + "&op_usm=1.1,0.5,0,0").
+                placeholder(R.drawable.ic_action_picture).into(imageView);
 
     }
 }
