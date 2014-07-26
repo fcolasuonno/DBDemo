@@ -22,7 +22,7 @@ import org.androidannotations.annotations.ViewById;
 /**
  * ViewModel object for the {@code product}.
  */
-@EViewGroup(R.layout.view_product_merge)
+@EViewGroup(R.layout.view_product)
 public class ProductView extends RelativeLayout implements ViewHolder {
     @ViewById
     protected TextView nameTextView, brandTextView;
