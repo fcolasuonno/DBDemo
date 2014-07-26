@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import com.bitmastro.debenhams.demo.base.AbstractContentValues;
 import com.bitmastro.debenhams.demo.model.ProductModel;
+import com.bitmastro.debenhams.demo.utils.CurrencyFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +31,10 @@ public class ProductContentValues extends AbstractContentValues {
         values.putProdnum(item.prodnum);
         values.putBrand(item.brand);
         values.putName(item.name);
-        values.putMingbp(item.mingbp);
-        values.putMaxgbp(item.maxgbp);
-        values.putMingbpWas(item.mingbpWas);
-        values.putMaxgbpWas(item.maxgbpWas);
+        values.putMingbp(CurrencyFormatter.format(item.mingbp));
+        values.putMaxgbp(CurrencyFormatter.format(item.maxgbp));
+        values.putMingbpWas(CurrencyFormatter.format(item.mingbpWas));
+        values.putMaxgbpWas(CurrencyFormatter.format(item.maxgbpWas));
         values.putImg(item.img);
         values.putSizes(item.sizes);
         values.putColours(item.colours);
