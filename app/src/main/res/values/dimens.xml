@@ -2,4 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
+    <integer name="layout_proportions">3</integer>
+    <integer name="category_columns">3</integer>
 </resources>

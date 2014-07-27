@@ -8,6 +8,7 @@ import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.adapter.CategoryAdapter;
 import com.bitmastro.debenhams.demo.model.CategoryModel;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
+import com.bitmastro.debenhams.demo.ui.layout.BaseLayoutManager;
 import com.bitmastro.debenhams.demo.ui.layout.GridLayoutManager;
 
 import org.androidannotations.annotations.AfterViews;
@@ -25,8 +26,6 @@ public class CategoryListFragment extends Fragment {
     @ViewById(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private GridLayoutManager layoutManager;
-
     @AfterViews
     void init() {
         // improve performance if you know that changes in content
@@ -42,7 +41,8 @@ public class CategoryListFragment extends Fragment {
 
         CategoryAdapter mAdapter = new CategoryAdapter(data);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity()));
+        int columns = getResources().getInteger(R.integer.category_columns);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), columns, BaseLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
