@@ -3,6 +3,7 @@ package com.bitmastro.debenhams.demo.fragment;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -54,7 +55,10 @@ public class ProductListFragment extends ListFragment {
             }
 
             public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+                // Save ListView state
+                Parcelable state = getListView().onSaveInstanceState();
                 setListAdapter(new ProductAdapter(getActivity(), cursor, 0));
+                getListView().onRestoreInstanceState(state);
             }
 
 
@@ -68,7 +72,6 @@ public class ProductListFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
