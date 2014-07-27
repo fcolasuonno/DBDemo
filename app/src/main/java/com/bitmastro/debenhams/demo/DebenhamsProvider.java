@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bitmastro.debenhams.demo.product.ProductColumns;
@@ -86,7 +87,7 @@ public class DebenhamsProvider extends ContentProvider {
     }
 
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(Uri uri, @NonNull ContentValues[] values) {
         final String table = uri.getLastPathSegment();
         final String selection = uri.getQueryParameter(QUERY_SELECTION);
         final SQLiteDatabase db = mCustomSQLiteOpenHelper.getWritableDatabase();
@@ -181,7 +182,7 @@ public class DebenhamsProvider extends ContentProvider {
     }
 
     @Override
-    public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
+    public ContentProviderResult[] applyBatch(@NonNull ArrayList<ContentProviderOperation> operations) throws OperationApplicationException {
         SQLiteDatabase db = mCustomSQLiteOpenHelper.getWritableDatabase();
         db.beginTransaction();
         try {

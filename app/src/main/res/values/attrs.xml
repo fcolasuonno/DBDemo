@@ -14,4 +14,8 @@
         <attr name="strokeWidth" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="FontTextView">
+        <attr name="fontName" format="string" />
+    </declare-styleable>
+
 </resources>

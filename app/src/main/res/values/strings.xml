@@ -2,5 +2,14 @@
 <resources>
 
     <string name="app_name">Debenhams Demo</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="category_name">Category Name</string>
+    <string name="name">Name</string>
+    <string name="brand">Brand</string>
+    <string name="was_price">Was Price</string>
+    <string name="now_price">Now Price</string>
+    <string name="was_pounds">Was £</string>
+    <string name="now_pounds">Now £</string>
 
 </resources>

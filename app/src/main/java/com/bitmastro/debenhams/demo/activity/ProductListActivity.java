@@ -1,7 +1,11 @@
 package com.bitmastro.debenhams.demo.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.fragment.ProductListFragment;
@@ -9,7 +13,9 @@ import com.bitmastro.debenhams.demo.fragment.ProductListFragment;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.OptionsItem;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_product_list)
 public class ProductListActivity extends ActionBarActivity implements ProductListFragment.Callbacks {
 
@@ -22,7 +28,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private boolean mTwoPane;
 
     @AfterViews
-    protected void doStuff() {
+    protected void init() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
        /* if (findViewById(R.id.product_detail_container) != null) {
@@ -60,5 +67,10 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             // for the selected item ID.
             ProductDetailActivity_.intent(this).productId(id).start();
         }
+    }
+
+    @OptionsItem(android.R.id.home)
+    public void navigateUp(MenuItem item) {
+        NavUtils.navigateUpTo(this, new Intent(this, MainActivity_.class));
     }
 }

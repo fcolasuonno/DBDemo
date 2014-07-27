@@ -13,8 +13,8 @@ import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
 import com.bitmastro.debenhams.demo.product.ProductCursor;
 import com.bitmastro.debenhams.demo.product.ProductSelection;
-import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flaviofaria.kenburnsview.Transition;
+import com.bitmastro.debenhams.demo.ui.view.KenBurnsView;
+import com.bitmastro.debenhams.demo.ui.view.Transition;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -44,7 +44,6 @@ public class ProductDetailFragment extends Fragment implements KenBurnsView.Tran
     @AfterViews
     void displayProduct() {
         imageView.pause();
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.placeholder));
         imageView.setTransitionListener(this);
         getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
             public Loader<Cursor> onCreateLoader(int id, Bundle args) {

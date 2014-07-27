@@ -22,18 +22,25 @@ import org.androidannotations.annotations.ViewById;
 /**
  * ViewModel object for the {@code product}.
  */
-@EViewGroup(R.layout.view_product)
+@EViewGroup(R.layout.product)
 public class ProductView extends RelativeLayout implements ViewHolder {
-    @ViewById
-    protected TextView nameTextView, brandTextView;
 
-    @ViewById
-    protected TextView wasPriceTextView, wasTV;
+    @ViewById(R.id.nameTextView)
+    protected TextView nameTextView;
 
-    @ViewById
+    @ViewById(R.id.brandTextView)
+    protected TextView brandTextView;
+
+    @ViewById(R.id.wasPriceTextView)
+    protected TextView wasPriceTextView;
+
+    @ViewById(R.id.wasTV)
+    protected TextView wasTV;
+
+    @ViewById(R.id.nowPriceTextView)
     protected TextView nowPriceTextView;
 
-    @ViewById
+    @ViewById(R.id.imageView)
     protected ImageView imageView;
 
     int width;
@@ -42,6 +49,9 @@ public class ProductView extends RelativeLayout implements ViewHolder {
         super(context);
         Resources r = getResources();
         width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 96, r.getDisplayMetrics());
+        int horiz_margin = r.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        int vert_margin = r.getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        setPadding(horiz_margin, vert_margin, horiz_margin, vert_margin);
     }
 
     @Override
@@ -61,7 +71,7 @@ public class ProductView extends RelativeLayout implements ViewHolder {
         }
         nowPriceTextView.setText(wrapper.getMingbp());
         Picasso.with(getContext()).load("http://debenhams.scene7.com/is/image/Debenhams/" + wrapper.getImg() + "?hei=" + width + "&op_usm=1.1,0.5,0,0").
-                placeholder(R.drawable.ic_action_picture).into(imageView);
+                placeholder(R.drawable.ic_placeholder).into(imageView);
 
     }
 }

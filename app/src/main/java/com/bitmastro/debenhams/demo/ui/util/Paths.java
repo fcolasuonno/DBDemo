@@ -1,4 +1,4 @@
-package com.bitmastro.debenhams.demo.ui.view;
+package com.bitmastro.debenhams.demo.ui.util;
 
 import android.graphics.Path;
 

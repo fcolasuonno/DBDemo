@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.bitmastro.debenhams.demo.R;
+import com.bitmastro.debenhams.demo.ui.util.Paths;
 
 public class AnimatedPathView extends View {
 

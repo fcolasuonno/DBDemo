@@ -1,11 +1,10 @@
 package com.bitmastro.debenhams.demo.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.animation.LinearInterpolator;
 
 import com.bitmastro.debenhams.demo.R;
-import com.bitmastro.debenhams.demo.api.ApiService;
 import com.bitmastro.debenhams.demo.ui.view.AnimatedPathView;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -14,13 +13,13 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_fullscreen)
 public class FullscreenActivity extends Activity {
 
@@ -61,16 +60,9 @@ public class FullscreenActivity extends Activity {
     }
 
     public void nextActivity() {
-        fetchData();
-        ProductListActivity_.intent(this).start();
+        MainActivity_.intent(this).start();
         finish();
     }
 
-    @Background
-    void fetchData() {
-        Intent restIntent = new Intent(this, ApiService.class);
-        restIntent.putExtra(ApiService.API_TYPE, ApiService.PRODUCT);
-        startService(restIntent);
-    }
 
 }

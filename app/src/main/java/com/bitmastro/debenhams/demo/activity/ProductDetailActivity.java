@@ -1,5 +1,6 @@
 package com.bitmastro.debenhams.demo.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -25,6 +26,7 @@ import org.androidannotations.annotations.OptionsItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ProductDetailFragment}.
  */
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_product_detail)
 public class ProductDetailActivity extends ActionBarActivity {
 
@@ -35,7 +37,7 @@ public class ProductDetailActivity extends ActionBarActivity {
     ProductDetailFragment product_detail_container;
 
     @AfterViews
-    void setupActionBar() {
+    void init() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ProductDetailFragment fragment = ProductDetailFragment_.builder().itemId(productId).build();
         getSupportFragmentManager().beginTransaction()

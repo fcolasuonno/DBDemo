@@ -9,10 +9,14 @@ import com.willowtreeapps.androidcontentprovidergenerator.*;
 
 task contentProviderGen {
     description = 'Generating a beautiful ContentProvider and required classes'
+
     doLast {
         System.out.println("Generating ContentProvider...")
+        //noinspection GroovyUnusedAssignment
         String inputDir = "$projectDir/schema";
+        //noinspection GroovyUnusedAssignment
         String outputDir = "$projectDir/../app/src/main/java";
+        //noinspection GroovyUnusedAssignment
         String resDir = "$projectDir/../app/src/main/res";
         //if gradle throws an error on the following line, you probably either don't have your import statement set or you have the wrong path in your buildscript definition
 //        Main.Generate(inputDir, outputDir, resDir, true);

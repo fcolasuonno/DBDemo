@@ -45,8 +45,7 @@ public class ProductListFragment extends ListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     @AfterViews
-    void loadList() {
-
+    void init() {
         getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
             public Loader<Cursor> onCreateLoader(int id, Bundle args) {
                 // Change the selection to get a subset of your data
@@ -64,6 +63,7 @@ public class ProductListFragment extends ListFragment {
             }
         });
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

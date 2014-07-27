@@ -1,13 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/product_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="@dimen/activity_horizontal_margin"
     tools:context=".ProductDetailFragment">
 
 
-    <com.flaviofaria.kenburnsview.KenBurnsView
+    <com.bitmastro.debenhams.demo.ui.view.KenBurnsView
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -25,7 +26,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true">
 
-        <TextView
+        <com.bitmastro.debenhams.demo.ui.view.FontTextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,10 +34,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignWithParentIfMissing="false"
-            android:text="Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="@string/name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:fontName="Timeless.ttf" />
 
-        <TextView
+        <com.bitmastro.debenhams.demo.ui.view.FontTextView
             android:id="@+id/brandTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,8 +46,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="false"
             android:layout_below="@+id/nameTextView"
-            android:text="Brand"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/brand"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:fontName="Forum-Regular.ttf" />
 
         <RelativeLayout
             android:id="@+id/priceLayout"
@@ -55,27 +58,29 @@
             android:layout_toEndOf="@+id/brandTextView"
             android:layout_toRightOf="@+id/brandTextView">
 
-            <TextView
+            <com.bitmastro.debenhams.demo.ui.view.FontTextView
                 android:id="@+id/wasPriceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="Was Price"
-                android:textStyle="bold" />
+                android:text="@string/was_price"
+                android:textStyle="bold"
+                app:fontName="Forum-Regular.ttf" />
 
-            <TextView
+            <com.bitmastro.debenhams.demo.ui.view.FontTextView
                 android:id="@+id/nowPriceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/wasPriceTextView"
-                android:text="Now Price"
+                android:text="@string/now_price"
                 android:textColor="#ffcc0202"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:fontName="Forum-Regular.ttf" />
 
-            <TextView
+            <com.bitmastro.debenhams.demo.ui.view.FontTextView
                 android:id="@+id/wasTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,10 +88,10 @@
                 android:layout_alignParentTop="false"
                 android:layout_toLeftOf="@+id/wasPriceTextView"
                 android:layout_toStartOf="@+id/wasPriceTextView"
-                android:text="Was £"
-                android:textStyle="bold" />
+                android:text="@string/was_pounds"
+                app:fontName="Forum-Regular.ttf" />
 
-            <TextView
+            <com.bitmastro.debenhams.demo.ui.view.FontTextView
                 android:id="@+id/nowTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,9 +99,9 @@
                 android:layout_alignParentBottom="false"
                 android:layout_toLeftOf="@+id/nowPriceTextView"
                 android:layout_toStartOf="@+id/nowPriceTextView"
-                android:text="Now £"
+                android:text="@string/now_pounds"
                 android:textColor="#ffcc0202"
-                android:textStyle="bold" />
+                app:fontName="Forum-Regular.ttf" />
 
         </RelativeLayout>
 
