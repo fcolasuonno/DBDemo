@@ -1,18 +1,18 @@
 package com.bitmastro.debenhams.demo.model;
 
-import android.net.Uri;
-
 public class CategoryModel {
     private String mainCategory;
     private String category;
     private int drawable;
-    private Uri contentUri;
 
-    public CategoryModel(String pMainCategory, String categoryName, int dresses, Uri contentUri) {
+
+    private int apiContent;
+
+    public CategoryModel(String pMainCategory, String categoryName, int dresses, int content) {
         this.mainCategory = pMainCategory;
         this.category = categoryName;
         this.drawable = dresses;
-        this.contentUri = contentUri;
+        this.apiContent = content;
     }
 
     public String getMainCategory() {
@@ -27,7 +27,7 @@ public class CategoryModel {
         return drawable;
     }
 
-    public Uri getContentUri() {
-        return contentUri;
+    public int getApiContent() {
+        return apiContent;
     }
 }

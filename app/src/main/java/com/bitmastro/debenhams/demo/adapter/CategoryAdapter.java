@@ -1,6 +1,6 @@
 package com.bitmastro.debenhams.demo.adapter;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.activity.ProductListActivity_;
+import com.bitmastro.debenhams.demo.api.ApiService;
+import com.bitmastro.debenhams.demo.api.ApiService_;
 import com.bitmastro.debenhams.demo.model.CategoryModel;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         // - replace the contents of the view with that element
         final CategoryModel model = dataset.get(position);
         holder.categoryTextView.setText(model.getCategory());
-        holder.contentURI = model.getContentUri();
+        holder.apiContent = model.getApiContent();
         Picasso.with(holder.itemView.getContext()).load(model.getDrawable()).into(holder.imageView);
     }
 
@@ -56,7 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public static class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView categoryTextView;
         public ImageView imageView;
-        public Uri contentURI;
+        public int apiContent;
 
         public CategoryViewHolder(View v) {
             super(v);
@@ -67,7 +69,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         @Override
         public void onClick(View v) {
-            ProductListActivity_.intent(v.getContext()).start();
+            switch (apiContent) {
+                case ApiService.PRODUCT:
+                    ProductListActivity_.intent(v.getContext()).start();
+                    break;
+            }
+            Intent restIntent = new Intent(v.getContext(), ApiService_.class);
+            restIntent.putExtra(ApiService.API_TYPE, apiContent);
+            v.getContext().startService(restIntent);
         }
     }
 }

@@ -11,5 +11,7 @@
     <string name="now_price">Now Price</string>
     <string name="was_pounds">Was £</string>
     <string name="now_pounds">Now £</string>
+    <string name="no_endpoint_connection">Unable to contact endpoint. Check connection.</string>
+    <string name="unrecognized_request">Unrecognized request</string>
 
 </resources>

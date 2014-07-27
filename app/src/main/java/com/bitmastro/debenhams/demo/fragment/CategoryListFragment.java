@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.adapter.CategoryAdapter;
+import com.bitmastro.debenhams.demo.api.ApiService;
 import com.bitmastro.debenhams.demo.model.CategoryModel;
-import com.bitmastro.debenhams.demo.product.ProductColumns;
 import com.bitmastro.debenhams.demo.ui.layout.BaseLayoutManager;
 import com.bitmastro.debenhams.demo.ui.layout.GridLayoutManager;
 
@@ -34,9 +34,9 @@ public class CategoryListFragment extends Fragment {
 
 
         final ArrayList<CategoryModel> data = new ArrayList<CategoryModel>();
-        data.add(new CategoryModel("Woman", "Day Dresses", R.drawable.dresses, ProductColumns.CONTENT_URI));
+        data.add(new CategoryModel("Woman", "Day Dresses", R.drawable.dresses, ApiService.PRODUCT));
         for (int i = 0; i < 10; i++) {
-            data.add(new CategoryModel("Unknown", String.valueOf(i + 1), R.drawable.placeholder, null));
+            data.add(new CategoryModel("Unknown", String.valueOf(i + 1), R.drawable.placeholder, -1));
         }
 
         CategoryAdapter mAdapter = new CategoryAdapter(data);
