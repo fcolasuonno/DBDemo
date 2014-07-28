@@ -1,28 +1,42 @@
 package com.bitmastro.debenhams.demo.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.ListFragment;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.bitmastro.debenhams.demo.DebenhamsProvider;
 import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.fragment.ProductDetailFragment;
 import com.bitmastro.debenhams.demo.fragment.ProductDetailFragment_;
 import com.bitmastro.debenhams.demo.fragment.ProductListFragment;
+import com.bitmastro.debenhams.demo.product.ProductColumns;
+import com.bitmastro.debenhams.demo.product.ProductSelection;
+import com.bitmastro.debenhams.demo.ui.view.MultiSpinner;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+
+import java.util.ArrayList;
 
 @SuppressLint("Registered")
 @EActivity(R.layout.activity_product_list)
+@OptionsMenu(R.menu.main)
 public class ProductListActivity extends ActionBarActivity implements ProductListFragment.Callbacks {
 
     @FragmentById
-    protected ListFragment product_list;
+    protected ProductListFragment product_list;
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -70,5 +84,67 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     @OptionsItem(android.R.id.home)
     public void navigateUp(MenuItem item) {
         NavUtils.navigateUpTo(this, new Intent(this, MainActivity_.class));
+    }
+
+    @OptionsItem(R.id.action_filter)
+    public void filter(MenuItem item) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View view = getLayoutInflater().inflate(R.layout.filter_dialog, null);
+        final MultiSpinner spinner = (MultiSpinner) view.findViewById(R.id.spinner);
+        final ProductSelection selection = new ProductSelection();
+        getSupportLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
+            @Override
+            public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+                // Change the selection to get a subset of your data
+                ProductSelection selection = new ProductSelection();
+                return new CursorLoader(ProductListActivity.this, DebenhamsProvider.groupBy(ProductColumns.CONTENT_URI, ProductColumns.BRAND), new String[]{ProductColumns._ID, ProductColumns.BRAND, "count(*) AS _count"}, selection.sel(), selection.args(), ProductColumns.BRAND);
+            }
+
+            @Override
+            public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+                final ArrayList<String> mArrayList = new ArrayList<String>();
+                for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
+                    // The Cursor is now set to the right position
+                    mArrayList.add(data.getString(1));//,data.getInt(2)));
+                }
+                spinner.setItems(mArrayList, "All", new MultiSpinner.MultiSpinnerListener() {
+                    @Override
+                    public void onItemsSelected(boolean[] selected) {
+                        boolean firstOr = true;
+                        for (int i = 0; i < selected.length; i++) {
+                            boolean b = selected[i];
+                            if (b) {
+                                if (firstOr) {
+                                    firstOr = false;
+                                    selection.brand(mArrayList.get(i));
+                                } else {
+                                    selection.or().brand(mArrayList.get(i));
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
+
+            }
+        });
+
+        builder.setTitle(getResources().getString(R.string.action_filter)).setCancelable(true)
+                .setView(view).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                product_list.setFilter(selection);
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // cancel the alert box and put a Toast to the user
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

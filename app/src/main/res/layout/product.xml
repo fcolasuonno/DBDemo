@@ -53,7 +53,7 @@
         android:layout_below="@id/brandTextView"
         android:layout_toLeftOf="@+id/wasPriceTextView"
         android:text="@string/was_pounds"
-        app:fontName="Forum-Regular.ttf" />
+        android:textStyle="bold" />
 
     <com.bitmastro.debenhams.demo.ui.view.FontTextView
         android:id="@+id/wasPriceTextView"
@@ -62,7 +62,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/nameTextView"
         android:text="@string/was_price"
-        app:fontName="Forum-Regular.ttf" />
+        android:textStyle="bold" />
 
     <com.bitmastro.debenhams.demo.ui.view.FontTextView
         android:id="@+id/nowTV"
@@ -72,7 +72,7 @@
         android:layout_toLeftOf="@+id/nowPriceTextView"
         android:text="@string/now_pounds"
         android:textColor="#ffcc0202"
-        app:fontName="Forum-Regular.ttf" />
+        android:textStyle="bold" />
 
     <com.bitmastro.debenhams.demo.ui.view.FontTextView
         android:id="@+id/nowPriceTextView"
@@ -82,7 +82,7 @@
         android:layout_below="@id/wasPriceTextView"
         android:text="@string/now_price"
         android:textColor="#ffcc0202"
-        app:fontName="Forum-Regular.ttf" />
+        android:textStyle="bold" />
 
 
 </merge><!--  </RelativeLayout>-->

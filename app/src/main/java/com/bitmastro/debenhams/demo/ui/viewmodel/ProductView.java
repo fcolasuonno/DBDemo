@@ -40,6 +40,9 @@ public class ProductView extends RelativeLayout implements ViewHolder {
     @ViewById(R.id.nowPriceTextView)
     protected TextView nowPriceTextView;
 
+    @ViewById(R.id.nowTV)
+    protected TextView nowTV;
+
     @ViewById(R.id.imageView)
     protected ImageView imageView;
 
@@ -64,10 +67,12 @@ public class ProductView extends RelativeLayout implements ViewHolder {
         if (mingbpWas.equals("0.00")) {
             wasPriceTextView.setVisibility(INVISIBLE);
             wasTV.setVisibility(INVISIBLE);
+            nowTV.setText(getResources().getText(R.string.pounds));
         } else {
             wasPriceTextView.setVisibility(VISIBLE);
             wasTV.setVisibility(VISIBLE);
             wasPriceTextView.setText(mingbpWas);
+            nowTV.setText(getResources().getText(R.string.now_pounds));
         }
         nowPriceTextView.setText(wrapper.getMingbp());
         Picasso.with(getContext()).load("http://debenhams.scene7.com/is/image/Debenhams/" + wrapper.getImg() + "?hei=" + width + "&op_usm=1.1,0.5,0,0").

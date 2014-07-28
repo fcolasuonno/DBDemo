@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
+import com.bitmastro.debenhams.demo.R;
 import com.bitmastro.debenhams.demo.adapter.ProductAdapter;
 import com.bitmastro.debenhams.demo.product.ProductColumns;
 import com.bitmastro.debenhams.demo.product.ProductSelection;
@@ -19,7 +20,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
 @EFragment
-public class ProductListFragment extends ListFragment {
+public class ProductListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -40,34 +41,22 @@ public class ProductListFragment extends ListFragment {
      * clicks.
      */
     private Callbacks mCallbacks = sDummyCallbacks;
+    ProductSelection selection = new ProductSelection();
     /**
      * The current activated item position. Only used on tablets.
      */
     private int mActivatedPosition = ListView.INVALID_POSITION;
+    private ProductAdapter mAdapter;
 
     @AfterViews
     void init() {
-        getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
-            public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                // Change the selection to get a subset of your data
-                ProductSelection selection = new ProductSelection();
-                return new CursorLoader(getActivity(), ProductColumns.CONTENT_URI, ProductColumns.FULL_PROJECTION, selection.sel(), selection.args(), ProductColumns.DEFAULT_ORDER);
-            }
-
-            public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                // Save ListView state
-                Parcelable state = getListView().onSaveInstanceState();
-                setListAdapter(new ProductAdapter(getActivity(), cursor, 0));
-                getListView().onRestoreInstanceState(state);
-            }
-
-
-            public void onLoaderReset(Loader<Cursor> loader) {
-
-            }
-        });
+        setEmptyText(getResources().getString(R.string.no_products_found));
+        mAdapter = new ProductAdapter(getActivity(), null, 0);
+        Parcelable state = getListView().onSaveInstanceState();
+        setListAdapter(mAdapter);
+        getListView().onRestoreInstanceState(state);
+        getLoaderManager().initLoader(0, null, this);
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -136,6 +125,28 @@ public class ProductListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    public void setFilter(ProductSelection pSelection) {
+        selection = pSelection;
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // Change the selection to get a subset of your data
+
+        return new CursorLoader(getActivity(), ProductColumns.CONTENT_URI, ProductColumns.FULL_PROJECTION, selection.sel(), selection.args(), ProductColumns.DEFAULT_ORDER);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> objectLoader, Cursor cursor) {
+        mAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> objectLoader) {
+        mAdapter.swapCursor(null);
     }
 
     /**

@@ -30,6 +30,9 @@ public class ProductDetailFragment extends Fragment implements KenBurnsView.Tran
     protected TextView nameTextView, brandTextView;
     @ViewById
     protected TextView wasPriceTextView, wasTV;
+
+    @ViewById
+    protected TextView nowTV;
     @ViewById
     protected TextView nowPriceTextView;
     @FragmentArg
@@ -74,10 +77,12 @@ public class ProductDetailFragment extends Fragment implements KenBurnsView.Tran
         if (mingbpWas.equals("0.00")) {
             wasPriceTextView.setVisibility(View.INVISIBLE);
             wasTV.setVisibility(View.INVISIBLE);
+            nowTV.setText(getResources().getText(R.string.pounds));
         } else {
             wasPriceTextView.setVisibility(View.VISIBLE);
             wasTV.setVisibility(View.VISIBLE);
             wasPriceTextView.setText(mingbpWas);
+            nowTV.setText(getResources().getText(R.string.now_pounds));
         }
         nowPriceTextView.setText(wrapper.getMingbp());
         noImg = wrapper.getNoimg();

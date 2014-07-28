@@ -1,5 +1,6 @@
 package com.bitmastro.debenhams.demo.api;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 
+@SuppressLint("Registered")
 @EService
 public class ApiService extends IntentService {
     public static final String API_TYPE = "api_type";
